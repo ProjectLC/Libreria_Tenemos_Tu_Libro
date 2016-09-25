@@ -22,5 +22,5 @@ module.export = {
         app.delete('/libros/:id', function(req, res){
             res.send('Eliminar Libro:'+ req.params.codigo);
         });
-        }
-    }
+     }
+};
