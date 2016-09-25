@@ -11,7 +11,7 @@ module.exports = {
         
         app.post('/personas', function (req, res) {
             var persona = req.body;
-            res.send('Crear Persona: ' + persona.id + ' ' + persona.nombre +' '+ persona.primer_apellido+ ' '+ persona.sgundo_apellido + ' '+ person.telefono 
+            res.send('Crear Persona: ' + persona.id + ' ' + persona.nombre +' '+ persona.primer_apellido+ ' '+ persona.sgundo_apellido + ' '+ persona.telefono 
                                         +' '+ persona.celular +' '+ persona.direccion +' '+ persona.email +' '+ persona.fecha_nacimiento +' '+ persona.usuario +' '+ persona.contraseña);
         });
 
