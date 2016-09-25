@@ -4,34 +4,23 @@ module.export = {
             res.send('Listar Libros: ');
         });
 
-        app.get('/libros/:codigo', function(req, res){
+        app.get('/libros/:id', function(req, res){
             res.send('Consultar Libro: ' + req.paran.codigo);
-        });
-
-        app.get('/generoLibros', function(req, res){
-            res.send('Lista de Genero Libros')
-        });
-
-        app.get('/autores', function(req, res){
-            res.send('Listado de autores')
-        });
-
-        app.get('/editoriales', function(req, res){
-            res.send('Listado de editoriales')
         });
 
         app.post('/libros', function(req, res){
             var libro = req.body;
-            res.send('Crear Libro'+ libro.codigo + ' '+ libor.nombre + ' '+ libro.autor +' '+ libro.editorial +' '+ libro.genero);
+            res.send('Crear Libro'+ libro.codigo + ' '+ libro.nombre + ' '+ libro.autor +' '+ libro.editorial +' '+ libro.genero +
+            ' ' + libro.fechaPublicacion + ' ' + libro.numeroTomo + ' ' + libro.tiempoPrestamo);
         });
 
-        app.put('/libros', function(req, res){
+        app.put('/libros/:id', function(req, res){
             var libro = req.body;
-            res.send('Actualiza Libro:'+ libro);
+            res.send('Actualizar Libro:'+ libro);
         });
 
-        app.delete('/libros/:codigo', function(req, res){
-            res.send('Eliminar Libro:'+ req.paran.codigo);
+        app.delete('/libros/:id', function(req, res){
+            res.send('Eliminar Libro:'+ req.params.codigo);
         });
         }
     }

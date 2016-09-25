@@ -21,7 +21,7 @@ module.exports = {
 
         app.put('/prestamos/:id', function (req, res) {
             var renovacion = req.body;
-            res.send('Actualizar Renovacion Prestamo: ' + renovacion);
+            res.send('Renovacion Prestamo: ' + renovacion);
         });
 
         app.put('/prestamos/:id', function (req, res) {
