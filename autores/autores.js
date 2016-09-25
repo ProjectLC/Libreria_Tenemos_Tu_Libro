@@ -14,13 +14,13 @@ module.exports = {
             res.send('Crear Autor: ' + autor.nit + ' ' + autor.name);
         });
 
-        app.put('/autores/:id', function (req, res) {
+        app.put('/autores', function (req, res) {
             var autor = req.body;
             res.send('Actualizar Autor: ' + autor);
         });
 
         app.delete('/autores/:id', function (req, res) {
-            res.send('Eliminar Autor: ');
+            res.send('Eliminar Autor: '+ req.params.id);
         });
 
     }

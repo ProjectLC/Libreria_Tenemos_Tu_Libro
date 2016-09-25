@@ -14,13 +14,13 @@ module.exports = {
             res.send('Crear Editorial: ' + editorial.nit + ' ' + editorial.name);
         });
 
-        app.put('/editoriales/:id', function (req, res) {
+        app.put('/editoriales', function (req, res) {
             var editorial = req.body;
-            res.send('Actualizar Editorial: ' + autor);
+            res.send('Actualizar Editorial: ' + editorial);
         });
 
         app.delete('/editoriales/:id', function (req, res) {
-            res.send('Eliminar Editorial: ');
+            res.send('Eliminar Editorial: '+ req.params.id);
         });
 
     }
