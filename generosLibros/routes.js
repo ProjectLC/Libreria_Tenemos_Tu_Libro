@@ -1,26 +1,26 @@
+var generoLibro = require('./model');
+
 module.exports = {
 
     configure: function (app) {
         app.get('/generoLibro', function (req, res) {
-            res.send('Listar Generos Libros: ' );
+            generoLibro.list(res);
         });
 
         app.get('/generoLibro/:id', function (req, res) {
-            res.send('Consultar Genero Libro : ' + req.params.id);
+            generoLibro.get(req.params.id, res);
         });
         
         app.post('/generoLibro', function (req, res) {
-            var genero = req.body;
-            res.send('Crear Genero Libro: ' + genero.codigo + ' ' + genero.nombre);
+            generoLibro.create(req.body, res);
         });
 
-        app.put('/generoLibro/:id', function (req, res) {
-            var genero = req.body;
-            res.send('Actualizar Genero Libro: ' + genero);
+        app.put('/generoLibro', function (req, res) {
+            generoLibro.update(req.body, res);
         });
 
         app.delete('/generoLibro/:id', function (req, res) {
-            res.send('Eliminar Genero Libro: '+ req.params.id);
+            generoLibro.delete(req.params.id, res);
         });
 
     }

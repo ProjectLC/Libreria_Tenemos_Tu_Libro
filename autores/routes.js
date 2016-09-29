@@ -1,26 +1,25 @@
-module.exports = {
+var autor = require('./model');
 
+module.exports = {
     configure: function (app) {
         app.get('/autores', function (req, res) {
-            res.send('Listar Autores: ' );
+            autor.list(res);
         });
 
         app.get('/autores/:id', function (req, res) {
-            res.send('Consultar Autor: ' + req.params.id);
+            autor.get(req.params.id, res);
         });
         
         app.post('/autores', function (req, res) {
-            var autor = req.body;
-            res.send('Crear Autor: ' + autor.nit + ' ' + autor.name);
+            autor.create(req.body, res);
         });
 
-        app.put('/autores/:id', function (req, res) {
-            var autor = req.body;
-            res.send('Actualizar Autor: ' + autor);
+        app.put('/autores/', function (req, res) {            
+            autor.update(req.body, res);
         });
 
         app.delete('/autores/:id', function (req, res) {
-            res.send('Eliminar Autor: ');
+            autor.delete(req.params.id, res);
         }); 
     }
 };
