@@ -79,6 +79,6 @@ function Editorial() {
     };
 
     
-}).call(Contact.prototype);
+}).call(Editorial.prototype);
 
 module.exports = new Contact();

@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyparser = require('body-parser');
 
-var autor = require('./autor/routes');
+var autor = require('./autores/routes');
 var editorial = require('./editoriales/routes');
 var generolibro = require('./generosLibros/routes');
 var libro = require('./libros/routes');
