@@ -67,12 +67,12 @@ function Editorial() {
 
     this.delete = function (id, res) {
         connection.acquire(function (err, con) {
-            con.query('DELETE FROM CONTACT WHERE ID = ?', [id], function (err, result) {
+            con.query('DELETE FROM EDITORIAL WHERE ID = ?', [id], function (err, result) {
                 con.release();
                 if (err) {
-                    res.send({ status: 1, message: 'Error al eliminar el contacto', error: err });
+                    res.send({ status: 1, message: 'Error al eliminar la editorial', error: err });
                 } else {
-                    res.send({ status: 0, message: 'Contacto eliminado satisfactoriamente' });
+                    res.send({ status: 0, message: 'Editorial eliminada satisfactoriamente' });
                 }
             });
         });

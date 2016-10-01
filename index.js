@@ -1,17 +1,28 @@
 var express = require('express');
 var bodyparser = require('body-parser');
 
-var product = require('./routes/product');
+var autor = require('./autor/routes');
+var editorial = require('./editoriales/routes');
+var generolibro = require('./generosLibros/routes');
+var libro = require('./libros/routes');
+var prestamo = require('./prestamos/routes');
+var persona = require('./personas/routes');
 
-var customer = require('./routes/clients');
-
+var connection = require('./mysql/connection');
 var app = express();
 
 app.use(bodyparser.urlencoded({extend: true}));
 app.use(bodyparser.json());
 
-product.configure(app);
-customer.configure(app);
+connection.init();
+
+autor.configure(app);
+editorial.configure(app);
+generolibro.configure(app);
+libro.configure(app);
+prestamo.configure(app);
+persona.configure(app);
+
 
 var server = app.listen(3000, function(){
     console.log('Server listening on port: ' + server.address().port)

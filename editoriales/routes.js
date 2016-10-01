@@ -1,27 +1,25 @@
-module.exports = {
+var editorial = require('./model');
 
+module.exports = {
     configure: function (app) {
         app.get('/editoriales', function (req, res) {
-            res.send('Listar Editoriales: ');
+            autor.list(res);
         });
 
         app.get('/editoriales/:id', function (req, res) {
-            res.send('Consultar Editorial : ' + req.params.id);
+            autor.get(req.params.id, res);
         });
-
+        
         app.post('/editoriales', function (req, res) {
-            var editorial = req.body;
-            res.send('Crear Editorial: ' + editorial.id + ' ' + editorial.name + ' ' + editorial.telefono);
+            autor.create(req.body, res);
         });
 
-        app.put('/editoriales/:id', function (req, res) {
-            var editorial = req.body;
-            res.send('Actualizar Editorial: ' + editorial);
+        app.put('/editoriales/', function (req, res) {            
+            autor.update(req.body, res);
         });
 
         app.delete('/editoriales/:id', function (req, res) {
-            res.send('Eliminar Editorial: ');
-        });
-
+            autor.delete(req.params.id, res);
+        }); 
     }
 };
