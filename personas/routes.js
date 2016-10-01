@@ -1,27 +1,25 @@
-module.exports = {
+var persona = require('/model');
 
+module.exports = {
     configure: function (app) {
         app.get('/personas', function (req, res) {
-            res.send('Listar Personas: ' );
+            persona.list(res);
         });
 
         app.get('/personas/:id', function (req, res) {
-            res.send('Consultar Persona : ' + req.params.id);
-        });
-        
-        app.post('/personas', function (req, res) {
-            var persona = req.body;
-            res.send('Crear Persona: ' + persona.id + ' ' + persona.nombre +' '+ persona.primer_apellido+ ' '+ persona.sgundo_apellido + ' '+ persona.telefono 
-                                        +' '+ persona.celular +' '+ persona.direccion +' '+ persona.email +' '+ persona.fecha_nacimiento +' '+ persona.usuario +' '+ persona.contraseña);
+            persona.get(req.params.id, res);
         });
 
-        app.put('/personas/:id', function (req, res) {
-            var persona = req.body;
-            res.send('Actualizar Persona: ' + persona);
+        app.post('/personas', function (req, res) {
+            persona.create(req.body, res);
+        });
+
+        app.put('/personas', function (req, res) {
+            persona.update(req.body, res);
         });
 
         app.delete('/personas/:id', function (req, res) {
-            res.send('Eliminar Persona: '+req.params.id);
+            persona.delete(req.params.id, res);
         });
 
     }
