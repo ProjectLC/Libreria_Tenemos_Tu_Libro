@@ -1,4 +1,4 @@
-var persona = require('/model');
+var persona = require('./model');
 
 module.exports = {
     configure: function (app) {

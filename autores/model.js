@@ -23,31 +23,13 @@ function Autor() {
 
     this.create = function (autor, res) {
         connection.acquire(function (err, con) {
-            con.beginTransaction(function (err) {
-                if (err) { throw err; }
-                con.query('INSERT INTO Autores SET ?', autor, function (err, result) {
-                    if (err) {
-                        con.rollback(function () {
-                            res.send({ status: 1, message: 'Error al crear el autor', error: err });
-                            con.release();
-                        });
-                    } else {
-                        con.commit(function (err) {
-                            if (err) {
-                                con.rollback(function () {
-                                    res.send({ status: 1, message: 'Error al crear el contacto', error: err });
-                                    con.release();
-                                });
-                            } else {
-                                con.release();
-                                res.send({ status: 0, message: 'Autor creado satisfactoriamente' });
-                            }
-                        });
-                    }
-                });
+            con.query('INSERT INTO Autores SET ?', autor, function (err, result) {
+                con.release();
+                res.send(result);
             });
         });
     };
+    
 
 this.update = function (autor, res){
     connection.acquire(function(err, con){

@@ -81,4 +81,4 @@ function Editorial() {
     
 }).call(Editorial.prototype);
 
-module.exports = new Contact();
+module.exports = new Editorial();

@@ -1,3 +1,5 @@
+var prestamo = require('./model');
+
 module.exports = {
 
     configure: function (app) {

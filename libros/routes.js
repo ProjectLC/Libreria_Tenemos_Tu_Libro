@@ -1,3 +1,5 @@
+var libro = require('./model');
+
 module.export = {
     
     configure: function(app){
