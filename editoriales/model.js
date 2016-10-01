@@ -21,34 +21,15 @@ function Editorial() {
             });
         });
     };
-
-    this.create = function (editorial, res) {
+    
+    this.create = function (editorialId, res) {
         connection.acquire(function (err, con) {
-            con.beginTransaction(function (err) {
-                if (err) { throw err; }
-                con.query('INSERT INTO EDITORIAL SET ?', editorial, function (err, result) {
-                    if (err) {
-                        con.rollback(function () {
-                            res.send({ status: 1, message: 'Error al crear la editorial', error: err });
-                            con.release();
-                        });
-                    } else {
-                        con.commit(function (err) {
-                            if (err) {
-                                con.rollback(function () {
-                                    res.send({ status: 1, message: 'Error al crear la editorial', error: err });
-                                    con.release();
-                                });
-                            } else {
-                                con.release();
-                                res.send({ status: 0, message: 'Editorial creada satisfactoriamente' });
-                            }
-                        });
-                    }
-                });
+            con.query('INSERT INTO EDITORIAL SET ?', editorial, function (err, result) {
+                con.release();
+                res.send(result);
             });
         });
-    }
+    };
                 
     this.update = function (editorial, res) {
         connection.acquire(function (err, con) {
