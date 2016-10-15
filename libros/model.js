@@ -41,7 +41,7 @@ function Libros() {
                             autorObj.CodigoLibro = generateId;
                             autorObj.ID = autorId++;
                         }
-                        con.query('INSERT INTO autores SET ?', listaAutores, function (err, result) {
+                        con.query('INSERT INTO autoreslibros SET ?', listaAutores, function (err, result) {
                             if (err) {
                                 con.rollback(function () {
                                     con.release();
