@@ -21,10 +21,10 @@ function Personas(){
             });
         });
     };
-
-    this.crate = function(Personas, res){
-        connection.acquire(function (err, con){
-            con.query('INSERT INTO Personas SET ?', Personas, function(err, result){
+    
+    this.create = function (persona, res) {
+        connection.acquire(function (err, con) {
+            con.query('INSERT INTO PERSONAS SET ?', persona, function (err, result) {
                 con.release();
                 res.send(result);
             });
