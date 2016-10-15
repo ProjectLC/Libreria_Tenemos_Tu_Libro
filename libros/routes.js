@@ -14,13 +14,12 @@ module.exports = {
             libro.create(req.body, res);
         });
 
-        /* app.put('/libros/:id', function (req, res) {
-             var libro = req.body;
-             res.send('Actualizar Libro:' + libro);
+        app.put('/libros', function (req, res) {
+             libro.update(req.body, res);
          });
  
          app.delete('/libros/:id', function (req, res) {
-             res.send('Eliminar Libro:' + req.params.codigo);
-         });*/
+             libro.delete(req.params.id,res);
+         });
     }
 };
