@@ -22,30 +22,11 @@ function Personas(){
         });
     };
 
-    this.crate = function (Personas, res){
-        connection.acquire(function (err, con){
-            con.beginTransaction(function (err){
-                if(err) {throw err;}
-                con.query('INSERT INTO Personas SET ?', Personas, function(err, result){
-                    if(err){
-                        con.rollback(function(){
-                            res.send({ status: 1, message: 'Error al guardar el registro', error: err});
-                            con.release();
-                        });
-                    }else{
-                        con.commit(function (err){
-                            if(err){
-                                con.rollback(function(){
-                                    res.send({ status: 1, message: 'Error al guardar el registro', error: err});
-                                    con.release();
-                                });
-                            }else{
-                                con.release();
-                                res.send({ status: 0, message: 'Registro guardado satisfactoriamente'});
-                            }
-                        });
-                    }
-                });
+    this.create = function (persona, res) {
+        connection.acquire(function (err, con) {
+            con.query('INSERT INTO PERSONAS SET ?', persona, function (err, result) {
+                con.release();
+                res.send(result);
             });
         });
     };

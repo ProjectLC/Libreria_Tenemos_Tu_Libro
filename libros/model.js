@@ -6,7 +6,7 @@ function Libros() {
 (function () {
     this.list = function (res) {
         connection.acquire(function (err, con) {
-            con.query('SELECT C.ID, C.NAME, C.COMPANY, P.ID CONSECUTIVE, P.PHONE FROM CONTACT C, PHONE P WHERE C.ID = P.CONTACT_ID', function (err, result) {
+            con.query('SELECT L.CodigoLibro, L.NombreLibro, E.NombreEditorial, CONSECUTIVE, P.PHONE FROM CONTACT C, PHONE P WHERE C.ID = P.CONTACT_ID', function (err, result) {
                 con.release();
                 res.send(result);
             });

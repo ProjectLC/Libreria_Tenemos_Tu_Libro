@@ -4,21 +4,23 @@ module.exports = {
 
     configure: function (app) {
         app.get('/prestamos', function (req, res) {
-            res.send('Listar Pestamos: ' );
+            prestamo.list(res);
         });
 
         app.get('/prestamos/:id', function (req, res) {
-            res.send('Consultar Pestamo : ' + req.params.id);
+            prestamo.get(req.params.id, res);
         });
         
         app.post('/prestamos/:lectorId/', function (req, res) {
-            var prestamo = req.body;
-            res.send('Crear Pestamo: ' + prestamo.id + ' ' + prestamo.lector +' '+ prestamo.libro+ ' '+ prestamo.fechaPrestamo + ' '+ prestamo.fechaDevolucion + ' ' + prestamo.numRenovaciones);
+            prestamo.create(req.body, res);
         });
 
-        app.put('/prestamos/:id', function (req, res) {
-            var prestamo = req.body;
-            res.send('Actualizar Pestamo: ' + prestamo);
+        app.put('/prestamos', function (req, res) {
+            prestamo.update(req.body, res);
+        });
+
+        app.delete('/prestamos/:id', function (req, res) {
+            prestamo.delete(req.params.id, res);
         });
 
         app.put('/prestamos/:id', function (req, res) {
@@ -31,9 +33,7 @@ module.exports = {
             res.send('Devolver Libro: ' + prestamo);
         });
 
-        app.delete('/prestamos/:id', function (req, res) {
-            res.send('Eliminar Pestamo: '+req.params.id);
-        });
+        
 
     }
 };
