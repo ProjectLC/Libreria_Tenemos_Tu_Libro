@@ -1,4 +1,4 @@
-var connection = require('../mysql/connection');
+var connection = require('../mysql/connection')
 
 function Libros() {
 }
@@ -6,58 +6,57 @@ function Libros() {
 (function () {
     this.list = function (res) {
         connection.acquire(function (err, con) {
-            con.query('SELECT C.ID, C.NAME, C.COMPANY, P.ID CONSECUTIVE, P.PHONE FROM CONTACT C, PHONE P WHERE C.ID = P.CONTACT_ID', function (err, result) {
+            con.query('select l.CodigoLibro,l.NombreLibro,a.NombreAutor,l.FechaPublicacion,l.NumeroTomo,l.TiempoPrestamo, g.NombreGenero, e.NombreEditorial FROM libros l,editoriales e,generoslibros g,autores a,autoreslibros o WHERE l.CodigoLibro = CodigoLibro AND e.CodigoEditorial = l.EditorialLibro AND g.CodigoGenero = l.GeneroLibro AND o.CodigoLibroAL = l.CodigoLibro AND o.CodigoAutorAL = a.CodigoAutor', function (err, result) {
                 con.release();
                 res.send(result);
             });
         });
     };
 
-    this.get = function (contactId, res) {
-        connection.acquire(function (err, con) {
-            con.query('SELECT C.ID, C.NAME, C.COMPANY, P.ID CONSECUTIVE, P.PHONE FROM CONTACT C, PHONE P WHERE C.ID = P.CONTACT_ID AND C.ID = ?', contactId, function (err, result) {
+    this.get = function(libroId, res){
+        connection.acquire(function (err, con){
+            con.query('select l.CodigoLibro,l.NombreLibro,a.NombreAutor,l.FechaPublicacion,l.NumeroTomo,l.TiempoPrestamo, g.NombreGenero, e.NombreEditorial FROM libros l,editoriales e,generoslibros g,autores a,autoreslibros o WHERE e.CodigoEditorial = l.EditorialLibro AND g.CodigoGenero = l.GeneroLibro AND o.CodigoLibroAL = l.CodigoLibro AND o.CodigoAutorAL = a.CodigoAutor AND l.CodigoLibro = ?', libroId, function(err, result){
                 con.release();
                 res.send(result);
             });
         });
     };
 
-    this.create = function (contact, res) {
-        var phoneList = contact.phoneList;
-        delete contact.phoneList;
+    this.create = function (libro, res) {
+        var listaAutores = libro.listaAutores;
+        delete libro.listaAutores;
         connection.acquire(function (err, con) {
             con.beginTransaction(function (err) {
                 if (err) { throw err; }
-                con.query('INSERT INTO CONTACT SET ?', contact, function (err, result) {
+                con.query('INSERT INTO libros SET ?', libro, function (err, result) {
                     if (err) {
                         con.rollback(function () {
-                            res.send({ status: 1, message: 'Error al crear el contacto', error: err });
+                            res.send({ status: 1, message: 'Error al crear el libro', error: err });
                             con.release();
                         });
                     } else {
-                        var generatedId = result.insertId;
-                        var phoneId = 1;
-                        for (var phone in phoneList) {
-                            var phoneObj = phoneList[phone];
-                            phoneObj.CONTACT_ID = generatedId;
-                            phoneObj.ID = phoneId++;
+                        var generateId = result.insertId;
+                        var autorId = 1;
+                        for (var autor in listaAutores) {
+                            autorObj.CodigoLibro = generateId;
+                            autorObj.ID = autorId++;
                         }
-                        con.query('INSERT INTO PHONE SET ?', phoneList, function (err, result) {
+                        con.query('INSERT INTO autores SET ?', listaAutores, function (err, result) {
                             if (err) {
                                 con.rollback(function () {
                                     con.release();
-                                    res.send({ status: 1, message: 'Error al crear el contacto', error: err });
+                                    res.send({ status: 1, message: 'Error al crear el libro', error: err });
                                 });
                             } else {
                                 con.commit(function (err) {
                                     if (err) {
-                                        con.rollback(function () {
-                                            res.send({ status: 1, message: 'Error al crear el contacto', error: err });
+                                        con.rollback(function(){
+                                            res.send({ status: 1, message: 'Error al crear el libro', error: err});
                                             con.release();
                                         });
-                                    } else {
+                                    }else{
                                         con.release();
-                                        res.send({ status: 0, message: 'Contacto creado satisfactoriamente' });
+                                        res.send({ status: 0, message: 'Libro creado Satisfactoriamente'});
                                     }
                                 });
                             }
@@ -68,57 +67,32 @@ function Libros() {
         });
     };
 
-    this.update = function (contact, res) {
-        connection.acquire(function (err, con) {
-            con.query('UPDATE CONTACT SET ? WHERE ID = ?', [contact, contact.ID], function (err, result) {
+    this.update = function(libro, res){
+        connection.acquire(function(err, con){
+            con.query('UPDATE libros SET WHERE CodigoLibro = ?', [libro, libro.CodigoLibro], function(err, result){
                 con.release();
-                if (err) {
-                    res.send({ status: 1, message: 'Error al actualizar el contacto', error: err });
-                } else {
-                    res.send({ status: 0, message: 'Contacto actualizado satisfactoriamente' });
+                if(err){
+                    res.send({status: 1,message: 'Error al actualizar el libro', error: err});
+                }else{
+                    res.send({status: 0, message: 'Libro actualizado correctamente'});
                 }
             });
         });
     };
 
-    this.updatePhone = function (phone, res) {
-        connection.acquire(function (err, con) {
-            con.query('UPDATE PHONE SET ? WHERE CONTACT_ID = ? AND ID = ?', [phone, phone.CONTACT_ID, phone.ID], function (err, result) {
-                con.release();
-                if (err) {
-                    res.send({ status: 1, message: 'Error al actualizar el contacto', error: err });
-                } else {
-                    res.send({ status: 0, message: 'Contacto actualizado satisfactoriamente' });
-                }
+    this.delete = function(codigo, res){
+        connection.acquire(function(err, con){
+            con.query('DELETE FROM libros WHERE CodigoLibro = ?', [codigo], function(err, result){
+                              con.release();
+                if(err){
+                    res.send({status: 1,message: 'Error al eliminar el libro', error: err});
+                }else{
+                    res.send({status: 0, message: 'Libro eliminado correctamente'});
+                }  
             });
         });
     };
-
-    this.delete = function (id, res) {
-        connection.acquire(function (err, con) {
-            con.query('DELETE FROM CONTACT WHERE ID = ?', [id], function (err, result) {
-                con.release();
-                if (err) {
-                    res.send({ status: 1, message: 'Error al eliminar el contacto', error: err });
-                } else {
-                    res.send({ status: 0, message: 'Contacto eliminado satisfactoriamente' });
-                }
-            });
-        });
-    };
-
-    this.deletePhone = function (contactId, id, res) {
-        connection.acquire(function (err, con) {
-            con.query('DELETE FROM PHONE WHERE CONTACT_ID = ? AND ID = ?', [contactId, id], function (err, result) {
-                con.release();
-                if (err) {
-                    res.send({ status: 1, message: 'Error al eliminar el contacto el telefono', error: err });
-                } else {
-                    res.send({ status: 0, message: 'Telefono eliminado satisfactoriamente' });
-                }
-            });
-        });
-    };
+    
 }).call(Libros.prototype);
 
 module.exports = new Libros();

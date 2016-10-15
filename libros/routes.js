@@ -1,29 +1,26 @@
 var libro = require('./model');
 
-module.export = {
-    
-    configure: function(app){
-        app.get('/libros',function(req, res){
-            res.send('Listar Libros: ');
+module.exports = {
+    configure: function (app) {
+        app.get('/libros', function (req, res) {
+            libro.list(res);
         });
 
-        app.get('/libros/:id', function(req, res){
-            res.send('Consultar Libro: ' + req.paran.codigo);
+        app.get('/libros/:id', function (req, res) {
+            libro.get(req.params.id, res);
         });
 
-        app.post('/libros', function(req, res){
-            var libro = req.body;
-            res.send('Crear Libro'+ libro.codigo + ' '+ libro.nombre + ' '+ libro.autor +' '+ libro.editorial +' '+ libro.genero +
-            ' ' + libro.fechaPublicacion + ' ' + libro.numeroTomo + ' ' + libro.tiempoPrestamo);
+        app.post('/libros', function (req, res) {
+            libro.create(req.body, res);
         });
 
-        app.put('/libros/:id', function(req, res){
-            var libro = req.body;
-            res.send('Actualizar Libro:'+ libro);
-        });
-
-        app.delete('/libros/:id', function(req, res){
-            res.send('Eliminar Libro:'+ req.params.codigo);
-        });
-     }
+        /* app.put('/libros/:id', function (req, res) {
+             var libro = req.body;
+             res.send('Actualizar Libro:' + libro);
+         });
+ 
+         app.delete('/libros/:id', function (req, res) {
+             res.send('Eliminar Libro:' + req.params.codigo);
+         });*/
+    }
 };
