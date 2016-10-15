@@ -4,7 +4,7 @@ var bodyparser = require('body-parser');
 var autor = require('./autores/routes');
 var editorial = require('./editoriales/routes');
 var generolibro = require('./generosLibros/routes');
-// var libro = require('./libros/routes');
+var libro = require('./libros/routes');
 // var prestamo = require('./prestamos/routes');
 var persona = require('./personas/routes');
 
@@ -19,7 +19,7 @@ connection.init();
 autor.configure(app);
 editorial.configure(app);
 generolibro.configure(app);
-// libro.configure(app);
+libro.configure(app);
 // prestamo.configure(app);
 persona.configure(app);
 
