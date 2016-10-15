@@ -21,7 +21,7 @@ function Personas(){
             });
         });
     };
-
+    
     this.create = function (persona, res) {
         connection.acquire(function (err, con) {
             con.query('INSERT INTO PERSONAS SET ?', persona, function (err, result) {
@@ -30,7 +30,7 @@ function Personas(){
             });
         });
     };
-
+    
     this.update = function (Personas, res){
         connection.acquire(function(err, con){
             con.query('UPDATE PERSONAS SET ? WHERE NumeroIdentificacion = ?', [Personas, Personas.NumeroIdentificacion], function(err, result){
