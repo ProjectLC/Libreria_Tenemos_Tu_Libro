@@ -6,13 +6,14 @@ function Prestamos() {
 (function () {
     this.list = function (res) {
         connection.acquire(function (err, con) {
-            con.query('SELECT C.ID, C.NAME, C.COMPANY, P.ID CONSECUTIVE, P.PHONE FROM CONTACT C, PHONE P WHERE C.ID = P.CONTACT_ID', function (err, result) {
+            con.query('SELECT P.CodigoPrestamo, P.NombreLector, PER.NombrePersona, P.FechaPrestamo, P.CantidadLibros, LP.CodigoLibroLP, L.NombreLibro, LP.RenovacionesLibro, LP.FechaDevolucion FROM PRESTAMOS P, PERSONAS PER, LIBROSPRESTAMOS LP, LIBROS L WHERE P.CodigoPrestamo = CodigoPrestamo AND PER.NumeroIdentificacion = P.NombreLector AND LP.CodigoPrestamoLP = P.CodigoPrestamo AND L.CodigoLibro = LP.CodigoLibroLP ', function (err, result) {
                 con.release();
                 res.send(result);
             });
         });
     };
 
+    /*
     this.get = function (contactId, res) {
         connection.acquire(function (err, con) {
             con.query('SELECT C.ID, C.NAME, C.COMPANY, P.ID CONSECUTIVE, P.PHONE FROM CONTACT C, PHONE P WHERE C.ID = P.CONTACT_ID AND C.ID = ?', contactId, function (err, result) {
@@ -80,7 +81,8 @@ function Prestamos() {
             });
         });
     };
-
+    */
+    /*
     this.delete = function (id, res) {
         connection.acquire(function (err, con) {
             con.query('DELETE FROM CONTACT WHERE ID = ?', [id], function (err, result) {
@@ -105,7 +107,8 @@ function Prestamos() {
                 }
             });
         });
-    };
+    }; */
+
 }).call(Prestamos.prototype);
 
 module.exports = new Prestamos();

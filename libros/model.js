@@ -38,10 +38,9 @@ function Libros() {
                         var generateId = result.insertId;
                         var autorId = 1;
                         for (var autor in listaAutores) {
-                            autorObj.CodigoLibro = generateId;
-                            autorObj.ID = autorId++;
+                            listaAutores[autor].CodigoLibroAL = generateId;
                         }
-                        con.query('INSERT INTO autores SET ?', listaAutores, function (err, result) {
+                        con.query('INSERT INTO autoreslibros SET ?', listaAutores, function (err, result) {
                             if (err) {
                                 con.rollback(function () {
                                     con.release();
