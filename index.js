@@ -19,6 +19,11 @@ var app = express();
 app.use(bodyparser.urlencoded({extend: true}));
 app.use(bodyparser.json());
 app.use(passport.initialize());
+app.use(session({
+  secret: 'eV9o7OemlmRJOge',
+  saveUninitialized: true,
+  resave: true
+}));
 
 connection.init();
 
