@@ -15,7 +15,7 @@ function Personas(){
 
     this.get = function(NumeroIdentificacion, res){
         connection.acquire(function (err, con){
-            con.query('SELECT NumeroIdentificacion,NombrePersona,Apellido1Persona,Apellido2Persona,Telefono1Persona,Telefono2Persona,DireccionPersona,EmailPersona,FechaNacimiento,UsuarioPersona,ClavePersona FROM PERSONAS WHERE NumeroIdentificacion = ?', NumeroIdentificacion, function(err, result){
+            con.query('SELECT P.NumeroIdentificacion, P.NombrePersona, P.Apellido1Persona, P.Apellido2Persona, P.Telefono1Persona, P.Telefono2Persona, P.DireccionPersona, P.EmailPersona, P.FechaNacimiento, P.UsuarioPersona, P.ClavePersona FROM PERSONAS P WHERE NumeroIdentificacion = ?', function(err, result){
                 con.release();
                 res.send(result);
             });
