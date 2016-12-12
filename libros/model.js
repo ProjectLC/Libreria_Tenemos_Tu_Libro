@@ -41,7 +41,7 @@ function Libros() {
                             autorObj.CodigoLibro = generateId;
                             autorObj.ID = autorId++;
                         }
-                        con.query('INSERT INTO autores SET ?', listaAutores, function (err, result) {
+                        con.query('INSERT INTO autoreslibros SET ?', listaAutores, function (err, result) {
                             if (err) {
                                 con.rollback(function () {
                                     con.release();
@@ -69,7 +69,7 @@ function Libros() {
 
     this.update = function(libro, res){
         connection.acquire(function(err, con){
-            con.query('UPDATE libros SET WHERE CodigoLibro = ?', [libro, libro.CodigoLibro], function(err, result){
+            con.query('UPDATE libros SET ? WHERE CodigoLibro = ?', [libro, libro.CodigoLibro], function(err, result){
                 con.release();
                 if(err){
                     res.send({status: 1,message: 'Error al actualizar el libro', error: err});
